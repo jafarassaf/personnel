@@ -52,4 +52,46 @@ class testLigue {
 
 		assertFalse(ligue.getEmployes().contains(employe));
 	}
+
+	@Test // test pour supprimer une ligue
+	void removeLigue() throws SauvegardeImpossible {
+		Ligue ligue = gestionPersonnel.addLigue("Fléchettes");
+		Employe employe = ligue.addEmploye("Bouchard", "Gérard", "g.bouchard@gmail.com", "azerty", LocalDate.of(2023, 12, 01), LocalDate.of(2024, 12, 01));
+		
+		assertTrue(ligue.getEmployes().contains(employe));
+		
+		ligue.remove();
+		
+		assertFalse(gestionPersonnel.getLigues().contains(ligue));
+	}
+	
+	@Test // changement d'admin
+	void changeAdmin() throws SauvegardeImpossible {
+		Ligue ligue = gestionPersonnel.addLigue("Fléchettes");
+		Employe employeJafar = ligue.addEmploye("Jafar", "Jafar", "jafar@gmail.com", null, LocalDate.of(2022, 01, 20), LocalDate.of(2023, 10, 20));
+		
+		ligue.setAdministrateur(employeJafar); assertEquals(employeJafar, ligue.getAdministrateur());
+		
+		Employe employeAngelin = ligue.addEmploye("Angelin", "Angelin", "angelin@gmail.com", null, LocalDate.of(2024, 01, 01), LocalDate.of(2024, 03, 01));
+		
+		ligue.setAdministrateur(employeAngelin); assertEquals(employeAngelin, ligue.getAdministrateur());
+	}
+	
+	@Test // suppression d'un admin dans la ligue
+	void removeAdmin() throws SauvegardeImpossible {
+		Ligue ligue = gestionPersonnel.addLigue("Fléchettes");
+		Employe employeJafar = ligue.addEmploye("Jafar", "Jafar", "jafar@gmail.com", null, LocalDate.of(2022, 01, 20), LocalDate.of(2023, 10, 20));
+		
+		ligue.setAdministrateur(employeJafar); assertEquals(employeJafar, ligue.getAdministrateur());
+		
+		Employe employeAngelin = ligue.addEmploye("Angelin", "Angelin", "angelin@gmail.com", null, LocalDate.of(2024, 01, 01), LocalDate.of(2024, 03, 01));
+		
+		ligue.setAdministrateur(employeAngelin); assertEquals(employeAngelin, ligue.getAdministrateur());
+		
+		ligue.remove(employeJafar);
+		
+		assertNotEquals(employeJafar, ligue.getAdministrateur());
+		
+		assertFalse(ligue.getEmployes().contains(employeJafar));
+	}
 }
