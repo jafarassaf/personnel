@@ -1,11 +1,12 @@
 package testsUnitaires;
 
 import static org.junit.jupiter.api.Assertions.*;
+
+import java.time.LocalDate;
+
 import org.junit.jupiter.api.Test;
 
 import personnel.*;
-
-import java.time.LocalDate;
 
 class testLigue {
 	GestionPersonnel gestionPersonnel = GestionPersonnel.getGestionPersonnel();
@@ -17,10 +18,11 @@ class testLigue {
 	}
 
 	@Test
-	void addEmploye() throws SauvegardeImpossible
-	{
+	void addEmploye() throws SauvegardeImpossible {
 		Ligue ligue = gestionPersonnel.addLigue("Fléchettes");
-		Employe employe = ligue.addEmploye("Bouchard", "Gérard", "g.bouchard@gmail.com", "azerty", LocalDate.of(year:2023, month12, dayOfMonth:01), LocalDate.of(year:2024, month12, dayOfMonth_01));
+		Employe employe = ligue.addEmploye("Bouchard", "Gérard", "g.bouchard@gmail.com", "azerty",
+				LocalDate.of(2023, 12, 01), LocalDate.of(2024, 12, 01));
 		assertEquals(employe, ligue.getEmployes().first());
 	}
+
 }
