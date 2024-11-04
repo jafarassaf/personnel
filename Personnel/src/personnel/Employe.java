@@ -22,6 +22,7 @@ public class Employe implements Serializable, Comparable<Employe>
 	
 	
 	public Employe(GestionPersonnel gestionPersonnel, Ligue ligue, String nom, String prenom, String mail, String password, LocalDate dateArrivee, LocalDate dateDepart)
+	throws DateIncoherente
 	{
 		this.gestionPersonnel = gestionPersonnel;
 		this.nom = nom;
@@ -29,6 +30,9 @@ public class Employe implements Serializable, Comparable<Employe>
 		this.password = password;
 		this.mail = mail;
 		this.ligue = ligue;
+		if (dateDepart.isBefore(dateArrivee) || dateArrivee == null || dateDepart == null){
+			throw new DateIncoherente();
+		}
 		this.dateArrivee = dateArrivee;
 		this.dateDepart = dateDepart;
 	}
@@ -155,15 +159,25 @@ public class Employe implements Serializable, Comparable<Employe>
 	 * récupère les droits d'administration sur sa ligue.
 	 */
 	
-	public void setDateArrivee(LocalDate dateArrivee) {
+	public void setDateArrivee(LocalDate dateArrivee) 
+	throws DateIncoherente
+	{
+		if (dateDepart.isBefore(dateArrivee) || dateArrivee == null){
+			throw new DateIncoherente();
+		}
 		this.dateArrivee = dateArrivee;
 	} // permet d'assigner une valeur de type date pour la date d'arrivée
 	
-	public LocalDate getDateArrivee() {
+	public LocalDate getDateArrivee()
+	
+	{
 		return dateArrivee;
 	} // permet d'obtenir la date d'arrivée
 	
-	public void setDateDepart(LocalDate dateDepart) {
+	public void setDateDepart(LocalDate dateDepart) throws DateIncoherente{
+		if (dateDepart.isBefore(dateArrivee) || dateDepart == null){
+			throw new DateIncoherente();
+		}
 		this.dateDepart = dateDepart;
 	} // permet d'assigner une valeur de type date pour la date de départ
 	

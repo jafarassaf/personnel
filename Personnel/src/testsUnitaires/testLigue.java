@@ -18,15 +18,17 @@ class testLigue {
 	}
 
 	@Test
-	void addEmploye() throws SauvegardeImpossible {
+	void addEmploye() throws SauvegardeImpossible, DateIncoherente {
 		Ligue ligue = gestionPersonnel.addLigue("Fléchettes");
 		Employe employe = ligue.addEmploye("Bouchard", "Gérard", "g.bouchard@gmail.com", "azerty",
 				LocalDate.of(2023, 12, 01), LocalDate.of(2024, 12, 01));
 		assertEquals(employe, ligue.getEmployes().first());
 	}
 
+
 	@Test // test choisir employe comme admin
-	void setAdmin() throws SauvegardeImpossible {
+	void setAdmin() throws SauvegardeImpossible , DateIncoherente
+	{
 		Ligue ligue = gestionPersonnel.addLigue("Fléchettes");
 		Employe employe = ligue.addEmploye("Bouchard", "Gérard", "g.bouchard@gmail.com", "azerty", LocalDate.of(2023, 12, 01), LocalDate.of(2024, 12, 01));
 		
@@ -35,7 +37,7 @@ class testLigue {
 
 	@Test // test lorsqu'on supprimer un employé (ne devrait plus être présent après le
 			// remove() donc assertFalse)
-	void removeEmploye() throws SauvegardeImpossible {
+	void removeEmploye() throws SauvegardeImpossible, DateIncoherente {
 		Ligue ligue = gestionPersonnel.addLigue("Fléchettes");
 		Employe employe = ligue.addEmploye("Bouchard", "Gérard", "g.bouchard@gmail.com", "azerty",
 				LocalDate.of(2023, 12, 01), LocalDate.of(2024, 12, 01));
@@ -48,7 +50,7 @@ class testLigue {
 	}
 
 	@Test // test pour supprimer une ligue
-	void removeLigue() throws SauvegardeImpossible {
+	void removeLigue() throws SauvegardeImpossible, DateIncoherente {
 		Ligue ligue = gestionPersonnel.addLigue("Fléchettes");
 		Employe employe = ligue.addEmploye("Bouchard", "Gérard", "g.bouchard@gmail.com", "azerty", LocalDate.of(2023, 12, 01), LocalDate.of(2024, 12, 01));
 		
@@ -60,7 +62,7 @@ class testLigue {
 	}
 	
 	@Test // changement d'admin
-	void changeAdmin() throws SauvegardeImpossible {
+	void changeAdmin() throws SauvegardeImpossible, DateIncoherente {
 		Ligue ligue = gestionPersonnel.addLigue("Fléchettes");
 		Employe employeJafar = ligue.addEmploye("Jafar", "Jafar", "jafar@gmail.com", null, LocalDate.of(2022, 01, 20), LocalDate.of(2023, 10, 20));
 		
@@ -72,7 +74,7 @@ class testLigue {
 	}
 	
 	@Test // suppression d'un admin dans la ligue
-	void removeAdmin() throws SauvegardeImpossible {
+	void removeAdmin() throws SauvegardeImpossible, DateIncoherente {
 		Ligue ligue = gestionPersonnel.addLigue("Fléchettes");
 		Employe employeJafar = ligue.addEmploye("Jafar", "Jafar", "jafar@gmail.com", null, LocalDate.of(2022, 01, 20), LocalDate.of(2023, 10, 20));
 		
@@ -88,4 +90,12 @@ class testLigue {
 		
 		assertFalse(ligue.getEmployes().contains(employeJafar));
 	}
+
+	 @Test // test pour vérifier les dates incohérentes
+	 void testDate(){
+		Ligue ligue = gestionPersonnel.addLigue("Fléchettes");
+		assertThrows(DateIncoherente.class, () -> {
+			ligue.addEmploye("Tojo", "Tojo", "tojo@gmail.com", "password046", LocalDate.of(2024, 12, 01), LocalDate.of(2022, 12, 01));
+		});
+	 }
 }
