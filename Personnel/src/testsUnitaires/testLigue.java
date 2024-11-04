@@ -24,5 +24,4 @@ class testLigue {
 				LocalDate.of(2023, 12, 01), LocalDate.of(2024, 12, 01));
 		assertEquals(employe, ligue.getEmployes().first());
 	}
-
 }
