@@ -2,6 +2,8 @@ package commandLine;
 
 import static commandLineMenus.rendering.examples.util.InOut.getString;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 
 import commandLineMenus.List;
@@ -94,14 +96,47 @@ public class LigueConsole
 	
 	private Option ajouterEmploye(final Ligue ligue)
 	{
-		return new Option("ajouter un employé", "a",
-				() -> 
-				{
-					ligue.addEmploye(getString("nom : "), 
-						getString("prenom : "), getString("mail : "), 
-						getString("password : "));
-				}
-		);
+	    return new Option("ajouter un employé", "a",
+	        () -> {
+	            String nom = getString("Nom : ");
+	            String prenom = getString("Prénom : ");
+	            String mail = getString("Mail : ");
+	            String password = getString("Password : ");
+	            
+	            // Demande la date d'arrivée
+	            LocalDate dateArrivee = null;
+	            
+	                try {
+	                    String dateArriveeStr = getString("Date d'arrivée au format yyyy-MM-dd : ");
+	                    dateArrivee = LocalDate.parse(dateArriveeStr);
+	                } catch (DateTimeParseException e) {
+	                    System.out.println("Format de date invalide.");
+	                }
+	            
+	            
+	            // Demande la date de départ
+	            LocalDate dateDepart = null;
+	            
+	                try {
+	                    String dateDepartStr = getString("Date de départ au format yyyy-MM-dd : ");
+	                    dateDepart = LocalDate.parse(dateDepartStr);
+	                } catch (DateTimeParseException e) {
+	                    System.out.println("Format de date invalide.");
+	                }
+	            
+	            
+	            // Vérifiez si les dates sont cohérentes
+	            try {
+	                if (dateDepart.isBefore(dateArrivee)) {
+	                    throw new DateIncoherente("La date de départ ne peut pas être avant la date d'arrivée.");
+	                }
+	                // Ajoute l'employé avec les dates
+	                ligue.addEmploye(nom, prenom, mail, password, dateArrivee, dateDepart);
+	            } catch (DateIncoherente e) {
+	                System.out.println("Attention! Erreur : " + e.getMessage());
+	            }
+	        }
+	    );
 	}
 	
 	private Menu gererEmployes(Ligue ligue)
