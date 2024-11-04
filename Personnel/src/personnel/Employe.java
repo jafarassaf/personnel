@@ -158,7 +158,7 @@ public class Employe implements Serializable, Comparable<Employe>
 	 * Supprime l'employé. Si celui-ci est un administrateur, le root
 	 * récupère les droits d'administration sur sa ligue.
 	 */
-	
+	//
 	public void setDateArrivee(LocalDate dateArrivee) 
 	throws DateIncoherente
 	{
