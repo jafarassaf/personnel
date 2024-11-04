@@ -5,13 +5,13 @@ import org.junit.jupiter.api.Test;
 
 import personnel.*;
 
-class testLigue 
-{
+import java.time.LocalDate;
+
+class testLigue {
 	GestionPersonnel gestionPersonnel = GestionPersonnel.getGestionPersonnel();
-	
+
 	@Test
-	void createLigue() throws SauvegardeImpossible
-	{
+	void createLigue() throws SauvegardeImpossible {
 		Ligue ligue = gestionPersonnel.addLigue("Fléchettes");
 		assertEquals("Fléchettes", ligue.getNom());
 	}
@@ -20,7 +20,7 @@ class testLigue
 	void addEmploye() throws SauvegardeImpossible
 	{
 		Ligue ligue = gestionPersonnel.addLigue("Fléchettes");
-		Employe employe = ligue.addEmploye("Bouchard", "Gérard", "g.bouchard@gmail.com", "azerty"); 
+		Employe employe = ligue.addEmploye("Bouchard", "Gérard", "g.bouchard@gmail.com", "azerty", LocalDate.of(year:2023, month12, dayOfMonth:01), LocalDate.of(year:2024, month12, dayOfMonth_01));
 		assertEquals(employe, ligue.getEmployes().first());
 	}
 }
