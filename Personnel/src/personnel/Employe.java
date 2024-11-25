@@ -207,6 +207,7 @@ public class Employe implements Serializable, Comparable<Employe>
 		return getPrenom().compareTo(autre.getPrenom());
 	}
 	
+	// affichage des dates lorsqu'on affiche un employé
 	@Override
 	public String toString()
 	{
