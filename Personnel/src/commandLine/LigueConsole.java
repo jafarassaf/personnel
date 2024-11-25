@@ -84,6 +84,7 @@ public class LigueConsole {
 				(element) -> editerLigue(element));
 	}
 
+	// demande en plus les dates lorsqu'on ajoute un employé avec gestion des exceptions
 	private Option ajouterEmploye(final Ligue ligue) {
 		return new Option("ajouter un employé", "a",
 				() -> {
