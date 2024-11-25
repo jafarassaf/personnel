@@ -134,12 +134,14 @@ public class LigueConsole {
 		return menu;
 	}
 
+	// méthode permettant de choisir l'employé pour ensuite le gérer
 	private List<Employe> selectionnerEmploye(final Ligue ligue) {
 		return new List<>("Sélectionner un employé", "s",
 				() -> new ArrayList<>(ligue.getEmployes()),
 				this::menuEmploye);
 	}
 
+	//menu employé pour intégrer la suppression et l'édition de l'employé
 	private Menu menuEmploye(Employe employe) {
 		Menu menu = new Menu("Gérer " + employe.getNom() + " " + employe.getPrenom(), "g");
 		menu.add(employeConsole.editerEmploye(employe));
